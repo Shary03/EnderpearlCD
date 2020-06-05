@@ -22,28 +22,6 @@ class Main extends PluginBase implements Listener {
         $this->config = new Config($this->getDataFolder()."config.yml", Config::YAML);
     }
 
-    public function onCommand(CommandSender $sender, Command $command, string $label, array $args) : bool {
-        if($command->getName() === "pearlcd") {
-            if(!$sender->hasPermission("pearlcd.change")) {
-                $sender->sendMessage(TextFormat::RED . "You do not have permissions to use this command");
-                return false;
-            }
-            if(isset($args[0])) {
-                $newcooldown = $args[0];
-                if(!is_numeric($newcooldown)){
-                    $sender->sendMessage("Cooldown must be numeric");
-                    return false;
-                }
-                $oldcooldown = $this->config->get("cooldown");
-                $this->config->set("cooldown", $newcooldown);
-                $this->config->save();
-                $sender->sendMessage("Successfully set the cooldown to $newcooldown seconds");
-                return false;
-            }
-            $sender->sendMessage("Usage: /pearlcd <seconds>");
-        }
-        return true;
-    }
 
     public function onEnderPearl(PlayerInteractEvent $event)
     {
